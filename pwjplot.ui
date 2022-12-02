@@ -119,7 +119,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QComboBox" name="combo_gain">
+          <widget class="QComboBox" name="gain_resistor">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -136,7 +136,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QSpinBox" name="spni_rate">
+          <widget class="QSpinBox" name="sample_rate_khz">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -173,7 +173,7 @@
          <item row="3" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QLineEdit" name="ln_file"/>
+            <widget class="QLineEdit" name="filename"/>
            </item>
            <item>
             <widget class="QToolButton" name="btn_file">
@@ -192,13 +192,19 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text">
             <string>Load</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="spin_rod">
+          <widget class="QSpinBox" name="rod_id">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -261,22 +267,31 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QDoubleSpinBox" name="dblspin_fft_end">
+          <widget class="QDoubleSpinBox" name="fft_end">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="decimals">
+            <number>6</number>
+           </property>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="btn_fft">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
            </property>
            <property name="text">
             <string>Calculate</string>
@@ -284,12 +299,15 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="dblspin_fft_start">
+          <widget class="QDoubleSpinBox" name="fft_start">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="decimals">
+            <number>6</number>
            </property>
           </widget>
          </item>
@@ -309,6 +327,29 @@
            </property>
           </widget>
          </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="combo_fft_scale">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="currentText">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Scale</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -322,7 +363,7 @@
       <property name="sizeHint" stdset="0">
        <size>
         <width>20</width>
-        <height>119</height>
+        <height>40</height>
        </size>
       </property>
      </spacer>
