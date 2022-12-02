@@ -115,6 +115,7 @@ class PWJPlot(QMainWindow):
         self.sample_rate_hz = self.ui.sample_rate_khz.value() * 1e3
         dt = 1 / self.sample_rate_hz
         t = np.ones(x.shape)
+        t[0] = 0.0
         t = np.cumsum(t * dt)
 
         data = {
