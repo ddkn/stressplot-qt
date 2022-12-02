@@ -82,6 +82,7 @@ class PWJPlot(QMainWindow):
         self.ui.btn_file.clicked.connect(self.set_file)
         self.ui.btn_load.clicked.connect(self.load_dataframe)
         self.ui.btn_fft.clicked.connect(self.calculate_fft)
+        self.ui.combo_data.currentIndexChanged.connect(self.change_ydata)
         self.ui.combo_fft_scale.currentIndexChanged.connect(self.set_scale)
 
         self.setWindowIcon(QIcon(str(path / "assets/icon.svg")))
@@ -126,18 +127,30 @@ class PWJPlot(QMainWindow):
         }
 
         self.df = DataFrame.from_dict(data)
+        self.ui.combo_data.addItems(
+            self.df.drop("Time (s)", axis=1).columns.to_list()
+        )
         print(self.df.head())
 
         self.ui.fft_start.setValue(self.df["Time (s)"].min())
         self.ui.fft_end.setValue(self.df["Time (s)"].max())
 
-        self.fig_raw.axes.cla()
         self.fig_fft.axes.cla()
-
-        self.df.plot(x="Time (s)", y="ADC value", ax=self.fig_raw.axes)
-        self.fig_raw.draw()
+        self.change_ydata()
 
         self.ui.btn_fft.setDisabled(False)
+
+    def change_ydata(self):
+        col = self.ui.combo_data.currentText()
+        print(f"Setting ydata to {col}")
+        self.fig_raw.axes.cla()
+        self.df.plot(
+            x="Time (s)",
+            y=col,
+            color=COLOR,
+            ax=self.fig_raw.axes
+        )
+        self.fig_raw.draw()
 
     def calculate_fft(self):
         print("Calculating FFT")
@@ -165,12 +178,12 @@ class PWJPlot(QMainWindow):
             x=self.df_fft["Frequency (kHz)"],
             ymin=0,
             ymax=self.df_fft["FFT(ADC value)"],
-            color="C0",
+            color=COLOR,
         )
         self.df_fft.plot(
             x="Frequency (kHz)",
             y="FFT(ADC value)",
-            color="C0",
+            color=COLOR,
             marker="o",
             linestyle="none",
             markerfacecolor="white",
