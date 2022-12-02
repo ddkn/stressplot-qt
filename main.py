@@ -11,6 +11,7 @@ from PySide2.QtWidgets import (
     QFileDialog
 )
 from PySide2.QtCore import QFile
+from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 
 import matplotlib as mpl
@@ -52,8 +53,8 @@ class PWJPlot(QMainWindow):
 
     def load_ui(self):
         loader = QUiLoader()
-        path = os.path.join(os.path.dirname(__file__), "pwjplot.ui")
-        ui_file = QFile(path)
+        path = Path(__file__).parent
+        ui_file = QFile(str(path / 'pwjplot.ui'))
         ui_file.open(QFile.ReadOnly)
         self.ui = loader.load(ui_file, self)
         ui_file.close()
@@ -83,7 +84,7 @@ class PWJPlot(QMainWindow):
         self.ui.btn_fft.clicked.connect(self.calculate_fft)
         self.ui.combo_fft_scale.currentIndexChanged.connect(self.set_scale)
 
-        #self.setWindowIcon(QIcon('icon.png')
+        self.setWindowIcon(QIcon(str(path / 'assets/icon.svg')))
         self.setWindowTitle("PWJPlot")
         self.setCentralWidget(self.ui.wgt_central)
 
