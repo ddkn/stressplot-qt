@@ -1,0 +1,65 @@
+#-
+# @file     dave.mplstyle
+#
+# @author   David Kalliecharan <dave@dal.ca>
+#
+# Base matplotlib settings before customizing plots.
+# Color style is from Wong, B. (2011) Nature Methods 8:441
+
+axes.labelsize          : medium
+axes.linewidth          : 1.0
+axes.prop_cycle	        : cycler('color', ['000000', 'e69f00', '56b4e9', '009e73', 'f0e442', '0072b2', 'd55e00', 'cc79a7'])
+axes.spines.left        : True
+axes.spines.bottom      : True
+axes.spines.top         : False
+axes.spines.right       : False
+axes.labelcolor         : grey
+axes.edgecolor          : grey
+axes.titlecolor         : grey
+#axes.formatter.limits   : 0, 0
+
+figure.facecolor        : 1.0
+figure.figsize          : 5, 5
+
+figure.subplot.left     : 0.15
+figure.subplot.bottom   : 0.15
+
+font.size               : 11
+font.family             : sans-serif
+#font.serif              : Computer Modern Roman, Times, Palatino, New Century Schoolbook, Bookman
+
+grid.alpha              : 0.1
+grid.color              : k
+grid.linestyle          : -
+
+legend.fontsize         : 10
+legend.frameon          : True
+legend.loc              : best
+legend.labelspacing     : 0.25
+legend.handlelength     : 1.0
+
+lines.linewidth         : 1.5
+lines.markersize        : 6
+
+mathtext.fontset        : cm
+text.usetex             : true
+
+xtick.direction         : out
+xtick.top               : False
+xtick.bottom            : True
+xtick.major.size        : 6
+xtick.minor.size        : 3
+xtick.major.width       : 1.0
+xtick.minor.width       : 0.5
+xtick.minor.visible     : True
+xtick.color             : grey
+
+ytick.direction         : out
+ytick.left              : True
+ytick.right             : False
+ytick.major.size        : 6
+ytick.minor.size        : 3
+ytick.major.width       : 1.0
+ytick.minor.width       : 0.5
+ytick.minor.visible     : True
+ytick.color             : grey

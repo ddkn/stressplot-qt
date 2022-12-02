@@ -12,6 +12,7 @@ from PySide2.QtCore import QFile
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 import matplotlib as mpl
+from matplotlib.pyplot import style
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg,
@@ -23,13 +24,15 @@ from pathlib import Path
 from scipy.fft import fft, fftfreq
 from bin2data import read_bin
 
+COLOR = "C1"
 ADC_COUNT_MAX = 4096  # Count
 VOLTAGE_MAX = 3.3  # V
 COUNTS_TO_VOLTS = VOLTAGE_MAX / ADC_COUNT_MAX  # V / Count
 SAMPLE_RATE_KHZ_DFLT = 180  # 180 kHz
 
+# Matplotlib configuration
 mpl.use("Qt5Agg")
-
+style.use("pwjplot.mplstyle")
 
 class MPLCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
