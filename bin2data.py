@@ -34,10 +34,10 @@ import struct
 import os.path
 
 CHAR = {
-    'B' : 1,
-    'H' : 2,
-    'I' : 4,
-    'Q' : 8,
+    "B": 1,
+    "H": 2,
+    "I": 4,
+    "Q": 8,
 }
 
 
@@ -50,7 +50,7 @@ def bin2data(bdata, fmt="H"):
 
 
 def read_bin(filename):
-    with open(filename, 'rb') as f:
+    with open(filename, "rb") as f:
         data = bin2data(f.read())
     return data
 
@@ -64,7 +64,7 @@ def write_file(data, fname):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Convert binary data to CSV")
-    parser.add_argument('file', type=str, help="Binary data file")
+    parser.add_argument("file", type=str, help="Binary data file")
 
     args = parser.parse_args()
 
