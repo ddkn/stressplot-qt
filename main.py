@@ -11,6 +11,7 @@ from PySide2.QtWidgets import (
 from PySide2.QtCore import QFile
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
+from datetime import datetime as pydt
 import matplotlib as mpl
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg,
@@ -30,6 +31,8 @@ ADC_COUNT_MAX = 4096  # Count
 VOLTAGE_MAX = 3.3  # V
 COUNTS_TO_VOLTS = VOLTAGE_MAX / ADC_COUNT_MAX  # V / Count
 SAMPLE_RATE_KHZ_DFLT = 180  # 180 kHz
+RG_OPTIONS = [50, 75, 100, 150, 300, 500, 750, 1000]
+RG_DEFAULT_INDEX = 1
 
 # Matplotlib configuration
 mpl.use("Qt5Agg")
@@ -44,8 +47,8 @@ class MPLCanvas(FigureCanvasQTAgg):
 
 
 class PWJPlot(QMainWindow):
-    df = None
-    df_fft = None
+    df: DataFrame = DataFrame()
+    df_fft: DataFrame = DataFrame()
 
     def __init__(self):
         super(PWJPlot, self).__init__()
@@ -77,11 +80,17 @@ class PWJPlot(QMainWindow):
         layout_fft.addWidget(self.toolbar_fft)
         self.ui.wgt_fft.setLayout(layout_fft)
 
+        self.ui.gain_resistor.addItems([str(r) for r in RG_OPTIONS])
+        self.ui.gain_resistor.setCurrentIndex(RG_DEFAULT_INDEX)
         self.ui.combo_fft_scale.addItems(["Linear", "Log"])
+        self.ui.output_path.setText(str(Path.home()))
 
         self.ui.btn_fft.setDisabled(True)
+        self.ui.btn_save.setDisabled(True)
 
         self.ui.btn_file.clicked.connect(self.set_file)
+        self.ui.btn_data_out.clicked.connect(self.select_output_path)
+        self.ui.btn_save.clicked.connect(self.save_data)
         self.ui.btn_load.clicked.connect(self.load_dataframe)
         self.ui.btn_fft.clicked.connect(self.calculate_fft)
         self.ui.combo_data.currentIndexChanged.connect(self.change_ydata)
@@ -107,12 +116,27 @@ class PWJPlot(QMainWindow):
 
         self.ui.filename.setText(filename[0])
 
+    def select_output_path(self):
+        output_path = QFileDialog.getExistingDirectory(
+            self,
+            caption=str("Select output directory"),
+            dir=str(Path.home()),
+            options=QFileDialog.ShowDirsOnly,
+        )
+        if output_path == "":
+            return
+
+        print(f"Setting output path: {output_path}")
+
+        self.ui.output_path.setText(output_path)
+
     def load_dataframe(self):
         print("Loading data")
-        if not Path(self.ui.filename.text()).is_file():
+        input_file = Path(self.ui.filename.text())
+        if not input_file.is_file():
             print("Please specify a file!")
             return
-        x = read_bin(self.ui.filename.text())
+        x = read_bin(input_file)
 
         # Create a cumulative sum of time from sample rate
         self.sample_rate_hz = self.ui.sample_rate_khz.value() * 1e3
@@ -138,11 +162,36 @@ class PWJPlot(QMainWindow):
 
         self.fig_fft.axes.cla()
         self.fig_fft.draw()
+        self.df_fft = DataFrame()
 
         self.ui.fft_start.setValue(self.df["Time (s)"].min())
         self.ui.fft_end.setValue(self.df["Time (s)"].max())
 
         self.ui.btn_fft.setDisabled(False)
+        self.ui.btn_save.setDisabled(False)
+
+    def save_data(self):
+        input_file = Path(self.ui.filename.text())
+        filename = input_file.name.lower().replace(".bin", "")
+
+        rod_id = self.ui.rod_id.value()
+        gain_resistor = self.ui.gain_resistor.currentText().lower()
+        sample_rate = self.ui.sample_rate_khz.value()
+        name = f"{filename}_r{rod_id}_rg{gain_resistor}_{sample_rate}khz"
+
+        timestamp = pydt.now().strftime("%Y%b%d_%H:%M:%S:%f")
+        output_name = f"{name}_{timestamp}.feather"
+
+        output_path = Path(self.ui.output_path.text())
+        output_file = output_path / output_name
+        print(f"Saving {output_file}")
+        self.df.to_feather(output_file)
+
+        if self.df_fft.shape[0] > 0:
+            output_fft_name = f"{name}_{timestamp}_fft.feather"
+            output_file = output_path / output_fft_name
+            print(f"Saving {output_file}")
+            self.df_fft.to_feather(output_file)
 
     def change_ydata(self):
         col = self.ui.combo_data.currentText()
@@ -176,7 +225,7 @@ class PWJPlot(QMainWindow):
             "horizontal",
             useblit=True,
             interactive=True,
-            props=dict(alpha=0.5, facecolor="C2", edgecolor="C2")
+            props=dict(alpha=0.5, facecolor="C2", edgecolor="C2"),
         )
 
     def calculate_fft(self):
