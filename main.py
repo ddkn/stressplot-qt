@@ -12,12 +12,13 @@ from PySide2.QtCore import QFile
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 import matplotlib as mpl
-from matplotlib.pyplot import style
-from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg,
     NavigationToolbar2QT as NavigationToolbar,
 )
+from matplotlib.figure import Figure
+from matplotlib.pyplot import style
+from matplotlib.widgets import SpanSelector
 import numpy as np
 from pandas import DataFrame
 from pathlib import Path
@@ -33,6 +34,7 @@ SAMPLE_RATE_KHZ_DFLT = 180  # 180 kHz
 # Matplotlib configuration
 mpl.use("Qt5Agg")
 style.use("pwjplot.mplstyle")
+
 
 class MPLCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
@@ -127,23 +129,29 @@ class PWJPlot(QMainWindow):
         }
 
         self.df = DataFrame.from_dict(data)
+        print(self.df.head())
+
+        self.ui.combo_data.clear()
         self.ui.combo_data.addItems(
             self.df.drop("Time (s)", axis=1).columns.to_list()
         )
-        print(self.df.head())
+
+        self.fig_fft.axes.cla()
 
         self.ui.fft_start.setValue(self.df["Time (s)"].min())
         self.ui.fft_end.setValue(self.df["Time (s)"].max())
-
-        self.fig_fft.axes.cla()
-        self.change_ydata()
 
         self.ui.btn_fft.setDisabled(False)
 
     def change_ydata(self):
         col = self.ui.combo_data.currentText()
+        if col not in self.df.columns.to_list():
+            return
+
         print(f"Setting ydata to {col}")
+        self.span = None
         self.fig_raw.axes.cla()
+
         self.df.plot(
             x="Time (s)",
             y=col,
@@ -151,6 +159,24 @@ class PWJPlot(QMainWindow):
             ax=self.fig_raw.axes
         )
         self.fig_raw.draw()
+
+        def span_select(xmin, xmax):
+            x = self.df["Time (s)"]
+            idxmin, idxmax = np.searchsorted(x, (xmin, xmax))
+            idxmax = min(x.shape[0] - 1, idxmax)
+            x_min = x.iloc[idxmin]
+            x_max = x.iloc[idxmax]
+            self.ui.fft_start.setValue(x_min)
+            self.ui.fft_end.setValue(x_max)
+
+        self.span = SpanSelector(
+            self.fig_raw.axes,
+            span_select,
+            "horizontal",
+            useblit=True,
+            interactive=True,
+            props=dict(alpha=0.5, facecolor="C2", edgecolor="C2")
+        )
 
     def calculate_fft(self):
         print("Calculating FFT")
