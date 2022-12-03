@@ -85,13 +85,13 @@ class PWJPlot(QMainWindow):
         self.ui.btn_load.clicked.connect(self.load_dataframe)
         self.ui.btn_fft.clicked.connect(self.calculate_fft)
         self.ui.combo_data.currentIndexChanged.connect(self.change_ydata)
-        self.ui.combo_fft_scale.currentIndexChanged.connect(self.set_scale)
+        self.ui.combo_fft_scale.currentIndexChanged.connect(self.set_fft_scale)
 
         self.setWindowIcon(QIcon(str(path / "assets/icon.svg")))
         self.setWindowTitle("PWJPlot")
         self.setCentralWidget(self.ui.wgt_central)
 
-    def set_scale(self):
+    def set_fft_scale(self):
         scale = self.ui.combo_fft_scale.currentText().lower()
         print(f"Setting FFT y scale to {scale}")
         self.fig_fft.axes.set_yscale(f"{scale}")
@@ -137,6 +137,7 @@ class PWJPlot(QMainWindow):
         )
 
         self.fig_fft.axes.cla()
+        self.fig_fft.draw()
 
         self.ui.fft_start.setValue(self.df["Time (s)"].min())
         self.ui.fft_end.setValue(self.df["Time (s)"].max())
@@ -215,6 +216,7 @@ class PWJPlot(QMainWindow):
             markerfacecolor="white",
             ax=self.fig_fft.axes,
         )
+        self.set_fft_scale()
         self.fig_fft.draw()
 
 
