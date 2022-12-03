@@ -206,8 +206,10 @@ class PWJPlot(QMainWindow):
             x="Time (s)",
             y=col,
             color=COLOR,
-            ax=self.fig_raw.axes
+            ax=self.fig_raw.axes,
+            legend=False,
         )
+        self.fig_raw.axes.set_ylabel(col)
         self.fig_raw.draw()
 
         def span_select(xmin, xmax):
@@ -247,7 +249,7 @@ class PWJPlot(QMainWindow):
         X = np.abs(X)
         f = fftfreq(X.size, dt)
 
-        data = {"FFT(ADC value)": X, "Frequency (kHz)": f / 1e3}
+        data = {"Frequency (kHz)": f / 1e3, "FFT(ADC value)": X}
         self.df_fft = DataFrame.from_dict(data)
 
         self.fig_fft.axes.vlines(
@@ -264,8 +266,10 @@ class PWJPlot(QMainWindow):
             linestyle="none",
             markerfacecolor="white",
             ax=self.fig_fft.axes,
+            legend=False,
         )
         self.set_fft_scale()
+        self.fig_fft.axes.set_ylabel("FFT(ADC value)")
         self.fig_fft.draw()
 
 
