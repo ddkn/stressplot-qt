@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PWJPlot</class>
- <widget class="QMainWindow" name="PWJPlot">
+ <class>StressPlot</class>
+ <widget class="QMainWindow" name="StressPlot">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -57,7 +57,7 @@
        <string>Experiment Parameters</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <layout class="QFormLayout" name="formLayout">
          <property name="horizontalSpacing">
           <number>6</number>
@@ -65,39 +65,22 @@
          <property name="verticalSpacing">
           <number>6</number>
          </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_rod">
-           <property name="text">
-            <string>Rod ID</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="lbl_gain">
+          <widget class="QLabel" name="lbl_vtr">
            <property name="text">
-            <string>Rg (Ohm)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QComboBox" name="gain_resistor">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+            <string>VTR </string>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="lbl_rate">
+          <widget class="QLabel" name="lbl_sd">
            <property name="text">
-            <string>Sample Rate</string>
+            <string>Standoff Dist.</string>
            </property>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QSpinBox" name="sample_rate_khz">
+          <widget class="QSpinBox" name="standoff_dist">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -108,30 +91,30 @@
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
            <property name="suffix">
-            <string> kHz</string>
+            <string> mm</string>
            </property>
            <property name="prefix">
             <string/>
            </property>
            <property name="minimum">
-            <number>90</number>
+            <number>0</number>
            </property>
            <property name="maximum">
             <number>200</number>
            </property>
            <property name="value">
-            <number>180</number>
+            <number>6</number>
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="lbl_file">
            <property name="text">
-            <string>Binary File</string>
+            <string>Input CSV</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <widget class="QLineEdit" name="filename"/>
@@ -145,7 +128,7 @@
            </item>
           </layout>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="QPushButton" name="btn_load">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -164,8 +147,15 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="rod_id">
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_dia_app">
+           <property name="text">
+            <string>Applied diameter</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="vtr">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -175,11 +165,59 @@
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
-           <property name="minimum">
+           <property name="decimals">
             <number>1</number>
            </property>
-           <property name="maximum">
-            <number>3</number>
+           <property name="value">
+            <double>21.100000000000001</double>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_input_pressure">
+           <property name="text">
+            <string>Pressure</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="input_pressure">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="suffix">
+            <string> kPSI</string>
+           </property>
+           <property name="decimals">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="dia_app">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="suffix">
+            <string> mm</string>
+           </property>
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <double>12.699999999999999</double>
            </property>
           </widget>
          </item>
@@ -209,14 +247,14 @@
        <item>
         <layout class="QFormLayout" name="formLayout_3">
          <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="lbl_xaxis">
            <property name="text">
-            <string>Data</string>
+            <string>X-Axis</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="combo_data">
+          <widget class="QComboBox" name="combo_xaxis">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -225,14 +263,14 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
             <string>Output Path</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
             <widget class="QLineEdit" name="output_path"/>
@@ -246,7 +284,7 @@
            </item>
           </layout>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QPushButton" name="btn_save">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -259,137 +297,20 @@
            </property>
           </widget>
          </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>300</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>FFT</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <layout class="QFormLayout" name="formLayout_2">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::ExpandingFieldsGrow</enum>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_fft_start">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Start</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="fft_start">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="decimals">
-            <number>6</number>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="lbl_fft_end">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QLabel" name="lbl_yaxis">
            <property name="text">
-            <string>End</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+            <string>Y-axis</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QDoubleSpinBox" name="fft_end">
+          <widget class="QComboBox" name="combo_yaxis">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="decimals">
-            <number>6</number>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="btn_fft">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Calculate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Scale</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QComboBox" name="combo_fft_scale">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="currentText">
-            <string/>
-           </property>
-           <property name="placeholderText">
-            <string/>
            </property>
           </widget>
          </item>
@@ -398,42 +319,13 @@
       </layout>
      </widget>
     </item>
-    <item row="3" column="1">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="0" rowspan="4">
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
+    <item row="0" column="0" rowspan="3">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="1">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
-       <widget class="QWidget" name="wgt_raw" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>500</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="wgt_fft" native="true">
+       <widget class="QWidget" name="wgt_data" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -449,6 +341,19 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="2" column="1">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>
@@ -468,13 +373,19 @@
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
     <addaction name="actionSave_Data_CSV"/>
-    <addaction name="actionSave_FFT_CSV"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
    <addaction name="menuMain"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+  </widget>
   <action name="actionOpen">
    <property name="text">
     <string>Open binary file</string>

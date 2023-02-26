@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.1, 2022-12-02T20:36:43. -->
+<!-- Written by QtCreator 4.14.1, 2023-02-26T13:22:51. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -167,16 +167,16 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration./home/ddkn/prj/pwjplot-qt/main.py</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/ddkn/prj/pwjplot-qt/main.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration./home/ddkn/prj/stressplot-qt/main.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/ddkn/prj/stressplot-qt/main.py</value>
     <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">{08a72952-52f4-42f2-a5ee-d45638cf1ea9}</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">/home/ddkn/prj/pwjplot-qt/main.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">/home/ddkn/prj/stressplot-qt/main.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/ddkn/prj/pwjplot-qt</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/ddkn/prj/stressplot-qt</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
